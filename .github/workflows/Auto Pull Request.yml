@@ -1,0 +1,24 @@
+name: Auto Pull Request
+
+on:
+  push:
+    branches:
+      - develop  # Trigger the workflow when changes are pushed to the 'develop' branch
+
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: develop  # Source branch
+          base: main       # Target branch
+          title: "Auto PR: Updates from develop"
+          body: "This is an automated pull request created by GitHub Actions."
+          labels: "automated"
